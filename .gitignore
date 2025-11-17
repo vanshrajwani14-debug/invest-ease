@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+
+# Python cache
+__pycache__/
+backend/__pycache__/
+
+# Python virtual environment
+venv/
+env/
+.env
+
+# Cursor workspace
+.cursor/
+
+# Logs
+*.log

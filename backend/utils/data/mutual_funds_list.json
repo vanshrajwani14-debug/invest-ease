@@ -1,0 +1,757 @@
+{
+  "funds": [
+    {
+      "scheme_code": 100027,
+      "scheme_name": "Grindlays Super Saver Income Fund-GSSIF-Half Yearly Dividend",
+      "fund_house": "Standard Chartered Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100028,
+      "scheme_name": "Grindlays Super Saver Income Fund-GSSIF-Quaterly Dividend",
+      "fund_house": "Standard Chartered Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100029,
+      "scheme_name": "Grindlays Super Saver Income Fund-GSSIF-Growth",
+      "fund_house": "Standard Chartered Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100030,
+      "scheme_name": "Grindlays Super Saver Income Fund-GSSIF-Annual Dividend",
+      "fund_house": "Standard Chartered Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100031,
+      "scheme_name": "Grindlays Super Saver Income Fund-GSSIF - ST-Dividend",
+      "fund_house": "Standard Chartered Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100032,
+      "scheme_name": "Grindlays Super Saver Income Fund-GSSIF - ST-Growth",
+      "fund_house": "Standard Chartered Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100033,
+      "scheme_name": "Aditya Birla Sun Life Large & Mid Cap Fund - Regular Growth",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - Large & Mid Cap Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100034,
+      "scheme_name": "Aditya Birla Sun Life Large & Mid Cap Fund -Regular - IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - Large & Mid Cap Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100035,
+      "scheme_name": "Birla Sun Life Freedom Fund-Plan A (Dividend)",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100036,
+      "scheme_name": "Birla Sun Life Freedom Fund-Plan B (Growth)",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100037,
+      "scheme_name": "Aditya Birla Sun Life Income Fund - Regular - Quarterly IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Medium to Long Duration Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100038,
+      "scheme_name": "Aditya Birla Sun Life Income Fund - Growth - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Medium to Long Duration Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100041,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund -Institutional - IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100042,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund-Retail (Growth)",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100043,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund-Institutional (Growth)",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100044,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund -Retail - IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100046,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund -Daily IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100047,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund - Growth",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100048,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund -Institutional - weekly  IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100049,
+      "scheme_name": "Aditya Birla Sun Life Cash Plus-Institutional - Fortnightly Dividend",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100051,
+      "scheme_name": "Aditya Birla Sun Life Liquid Fund -weekly IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Liquid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100052,
+      "scheme_name": "Aditya Birla Sun Life Cash Plus-Institutional Premium - Fortnightly Dividend",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100053,
+      "scheme_name": "Aditya Birla Sun Life Cash Plus-Institutional Premium Plan-Monthly Dividend",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100054,
+      "scheme_name": "Aditya Birla Sun Life Gilt Plus - Liquid Plan - Quarterly Dividend - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100055,
+      "scheme_name": "Aditya Birla Sun Life Gilt Plus - Liquid Plan - Growth - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100056,
+      "scheme_name": "Aditya Birla Sun Life Gilt Plus - Liquid Plan - Annual Dividend - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100057,
+      "scheme_name": "Aditya Birla Sun Life Govenment Securities Fund -Regular - Quarterly IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Gilt Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100058,
+      "scheme_name": "Aditya Birla Sun Life Government Securities Fund  - Growth - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Gilt Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100059,
+      "scheme_name": "Aditya Birla Sun Life Gilt Plus-PF Plan (Annual Dividend)",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100060,
+      "scheme_name": "Aditya Birla Sun Life Constant Maturity 10 Year Gilt Fund - Quarterly Dividend - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100061,
+      "scheme_name": "Aditya Birla Sun Life Constant Maturity 10 Year Gilt Fund - Growth - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100062,
+      "scheme_name": "Aditya Birla Sun Life Gilt Plus-Regular Plan (Annual Dividend)",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Gilt Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100063,
+      "scheme_name": "Aditya Birla Sun Life MNC Fund - Regular - IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - Sectoral/ Thematic",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100064,
+      "scheme_name": "Aditya Birla Sun Life MNC Fund - Growth - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - Sectoral/ Thematic",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100065,
+      "scheme_name": "Aditya Birla Sun Life India Opportunities Fund - Dividend - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100066,
+      "scheme_name": "Aditya Birla Sun Life India Opportunities Fund - Growth - Regular Plan",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100067,
+      "scheme_name": "Aditya Birla Sun Life Tax Plan -Regular - IDCW",
+      "fund_house": "Aditya Birla Sun Life Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - ELSS",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100068,
+      "scheme_name": "BARODA ELSS 96 - Plan A - IDCW",
+      "fund_house": "Baroda Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - ELSS",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100069,
+      "scheme_name": "BARODA PIONEER DIVERSIFIED FUND",
+      "fund_house": "Baroda Pioneer Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100077,
+      "scheme_name": "DSP Bond Fund - IDCW",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Medium Duration Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100078,
+      "scheme_name": "DSP Bond Fund - Growth",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Medium Duration Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100079,
+      "scheme_name": "DSP Bond Fund - IDCW - Monthly",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Medium Duration Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100080,
+      "scheme_name": "DSP Flexi Cap Fund - Regular Plan - IDCW",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - Flexi Cap Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100081,
+      "scheme_name": "DSP Aggressive Hybrid Fund- Regular Plan - Growth",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Hybrid Scheme - Aggressive Hybrid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100082,
+      "scheme_name": "DSP Aggressive Hybrid Fund- Regular Plan - IDCW",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Hybrid Scheme - Aggressive Hybrid Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100084,
+      "scheme_name": "DSP Gilt Fund - Regular Plan - Growth",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Gilt Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100085,
+      "scheme_name": "DSP Gilt Fund - Regular Plan - IDCW",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Gilt Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100086,
+      "scheme_name": "DSP Gilt Fund - Regular Plan - IDCW - Monthly",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Gilt Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100087,
+      "scheme_name": "DSP Savings Fund - Regular Plan - Growth",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Money Market Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100088,
+      "scheme_name": "DSP Savings Fund - Regular Plan - IDCW",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Money Market Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100089,
+      "scheme_name": "DSP Savings Fund - Regular Plan - IDCW - Monthly",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Money Market Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100090,
+      "scheme_name": "DSP BlackRock Technology.com   Fund - Regular Plan - Growth",
+      "fund_house": "DSP Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100119,
+      "scheme_name": "HDFC Balanced Advantage Fund - Growth Plan",
+      "fund_house": "HDFC Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Hybrid Scheme - Dynamic Asset Allocation or Balanced Advantage",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100120,
+      "scheme_name": "HDFC Balanced Advantage Fund - IDCW Plan",
+      "fund_house": "HDFC Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Hybrid Scheme - Dynamic Asset Allocation or Balanced Advantage",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100121,
+      "scheme_name": "HDFC Balanced Fund - Dividend Option",
+      "fund_house": "HDFC Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100122,
+      "scheme_name": "HDFC Balanced Fund - Growth Option",
+      "fund_house": "HDFC Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100123,
+      "scheme_name": "HDFC Income Fund - Quarterly IDCW Option",
+      "fund_house": "HDFC Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Medium to Long Duration Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100124,
+      "scheme_name": "HDFC Income Fund - Growth Option",
+      "fund_house": "HDFC Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Medium to Long Duration Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100136,
+      "scheme_name": "Principal Deposit Fund-Plan 54EA/EB-Plan 54EA /EB",
+      "fund_house": "PRINCIPAL Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100150,
+      "scheme_name": "Principal Child Benefit Fund-Super Saver-Future Guard Plan",
+      "fund_house": "PRINCIPAL Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100151,
+      "scheme_name": "Principal Retail Equity Savings Fund - Growth Option",
+      "fund_house": "PRINCIPAL Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100152,
+      "scheme_name": "Principal Nifty 100 Equal Weight Fund-Income Distribution CUM Capital Withdrawal",
+      "fund_house": "Principal Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Other Scheme - Index Funds",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100153,
+      "scheme_name": "Principal Nifty 100 Equal Weight Fund-Growth",
+      "fund_house": "Principal Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Other Scheme - Index Funds",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100154,
+      "scheme_name": "Principal Equity Fund-Dividend",
+      "fund_house": "PRINCIPAL Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100155,
+      "scheme_name": "Principal Equity Fund-Growth",
+      "fund_house": "PRINCIPAL Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100156,
+      "scheme_name": "Principal Tax Savings Fund",
+      "fund_house": "Principal Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - ELSS",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100171,
+      "scheme_name": "Quant Dynamic Bond-Dividend",
+      "fund_house": "quant Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Dynamic Bond",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100172,
+      "scheme_name": "Quant Dynamic Bond-Growth",
+      "fund_house": "quant Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Dynamic Bond",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100173,
+      "scheme_name": "Quant Dynamic Bond-Bonus",
+      "fund_house": "quant Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Debt Scheme - Dynamic Bond",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100174,
+      "scheme_name": "quant ELSS Tax Saver Fund - IDCW Option - Regular Plan",
+      "fund_house": "quant Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - ELSS",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100175,
+      "scheme_name": "quant ELSS Tax Saver Fund - Growth Option - Regular Plan",
+      "fund_house": "quant Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - ELSS",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100176,
+      "scheme_name": "quant Small Cap Fund - IDCW Option - Regular Plan",
+      "fund_house": "quant Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - Small Cap Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100177,
+      "scheme_name": "quant Small Cap Fund - Growth - Regular Plan",
+      "fund_house": "quant Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Equity Scheme - Small Cap Fund",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100178,
+      "scheme_name": "ING Income Fund-Regular Plan -Dividend Option (Quarterly)",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100179,
+      "scheme_name": "ING Income Fund-Regular Plan -Dividend Option (Half Yearly)",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100180,
+      "scheme_name": "ING Income Fund- Regular Plan - Dividend Option (Annual)",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100181,
+      "scheme_name": "ING Income Fund-Regular Plan -Growth Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100182,
+      "scheme_name": "ING Income Fund-Institutional Plan - Dividend Option (Half Yearly)",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100183,
+      "scheme_name": "ING Income Fund-Institutional Plan - Dividend Option (Quarterly)",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100184,
+      "scheme_name": "ING Income Fund-Institutional Plan -Dividend Option (Annual)",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100185,
+      "scheme_name": "ING Income Fund-Bonus Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100186,
+      "scheme_name": "ING Income Fund-Institutional Bonus Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100187,
+      "scheme_name": "ING Income Fund-Institutional Plan - Growth Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100188,
+      "scheme_name": "ING Core Equity Fund-Dividend Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100189,
+      "scheme_name": "ING Core Equity Fund-Growth Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100190,
+      "scheme_name": "ING Liquid Fund-Regular Growth Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100191,
+      "scheme_name": "ING Liquid Fund-Regular Weekly Dividend Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100192,
+      "scheme_name": "ING Liquid Fund-Regular Daily Dividend Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100194,
+      "scheme_name": "ING Liquid Fund-Auto Sweep Growth Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100195,
+      "scheme_name": "ING Liquid Fund-Auto Sweep Weekly Dividend Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100196,
+      "scheme_name": "ING Liquid Fund-Institutional Growth Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100197,
+      "scheme_name": "ING Liquid Fund-Institutional Weekly Dividend Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100198,
+      "scheme_name": "ING Liquid Fund-Institutional Daily Dividend Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    },
+    {
+      "scheme_code": 100199,
+      "scheme_name": "ING Liquid Fund-Super Institutional Growth Option",
+      "fund_house": "ING Mutual Fund",
+      "scheme_type": "Open Ended Schemes",
+      "scheme_category": "Income",
+      "nav": 0.0
+    }
+  ],
+  "fetched_at": "2025-11-17T13:05:03.219834"
+}

@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Download, BarChart3 } from 'lucide-react'
 import { BackButton } from '../components/BackButton'
 import { SummaryCard } from '../components/SummaryCard'
 import { AllocationDonutChart } from '../components/AllocationDonutChart'
 import { SIPLineGraph } from '../components/SIPLineGraph'
+import { RecommendationCard } from '../components/RecommendationCard'
+import { ExplanationBox } from '../components/ExplanationBox'
 
 export const RecommendationPage: React.FC = () => {
   const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState<any>(null)
+  const [recommendationResults, setRecommendationResults] = useState<any>(null)
+  const [recommendationLoading, setRecommendationLoading] = useState(false)
+  const [recommendationError, setRecommendationError] = useState<string | null>(null)
+
+  const apiBaseUrl =
+    (import.meta as any)?.env?.VITE_API_BASE_URL || 'http://localhost:8000'
 
   useEffect(() => {
     const mandatory = localStorage.getItem('mandatoryDetails')
@@ -24,7 +32,62 @@ export const RecommendationPage: React.FC = () => {
     }
   }, [navigate])
 
-  // Dummy data based on risk preference
+  const parseOptionalNumber = (value: any) => {
+    if (value === undefined || value === null || value === '') return undefined
+    const parsed = Number(value)
+    return Number.isNaN(parsed) ? undefined : parsed
+  }
+
+  const fetchRecommendations = useCallback(
+    async (details: any) => {
+      setRecommendationLoading(true)
+      setRecommendationError(null)
+
+      const payload = {
+        age: Number(details.age ?? details.userAge ?? 30),
+        investment_amount: Number(details.investmentAmount ?? details.investment_amount ?? 0),
+        risk_preference: details.riskPreference ?? details.risk_preference ?? 'Medium',
+        monthly_income: parseOptionalNumber(details.monthlyIncome ?? details.monthly_income),
+        savings: parseOptionalNumber(details.savings ?? details.totalSavings ?? details.netWorth),
+        time_horizon: details.timeHorizon ?? details.time_horizon,
+        experience_level: details.experienceLevel ?? details.experience_level,
+        financial_goals: details.financialGoals ?? details.financial_goals,
+        monthly_expenses: parseOptionalNumber(details.monthlyExpenses ?? details.monthly_expenses)
+      }
+
+      try {
+        const response = await fetch(`${apiBaseUrl}/api/recommend`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+
+        if (!response.ok) {
+          throw new Error('Unable to fetch recommendations')
+        }
+
+        const data = await response.json()
+        const normalized = data?.recommendations ?? data
+        setRecommendationResults(normalized)
+      } catch (error: any) {
+        setRecommendationError(error.message || 'Failed to load recommendations')
+        setRecommendationResults(null)
+      } finally {
+        setRecommendationLoading(false)
+      }
+    },
+    [apiBaseUrl]
+  )
+
+  useEffect(() => {
+    if (userDetails) {
+      fetchRecommendations(userDetails)
+    }
+  }, [userDetails, fetchRecommendations])
+
+  // Dummy data based on risk preference (fallback for charts & legacy sections)
   const getDummyRecommendation = () => {
     if (!userDetails) return null
 
@@ -80,6 +143,72 @@ export const RecommendationPage: React.FC = () => {
   }
 
   const recommendation = getDummyRecommendation()
+
+  const riskPreference = userDetails?.riskPreference ?? 'Medium'
+
+  const getCategoryItems = useCallback(
+    (keys: string[]) => {
+      if (!recommendationResults) return []
+      for (const key of keys) {
+        const value = recommendationResults[key]
+        if (Array.isArray(value) && value.length) {
+          return value
+        }
+      }
+      return []
+    },
+    [recommendationResults]
+  )
+
+  const getItemName = (item: any) => {
+    return (
+      item?.name ||
+      item?.scheme_name ||
+      item?.schemeName ||
+      item?.fund_name ||
+      'Unnamed Product'
+    )
+  }
+
+  const getItemScore = (item: any) => {
+    if (item?.score !== undefined) return item.score
+    if (item?.combined_score !== undefined) return item.combined_score
+    if (item?.rating !== undefined) return item.rating
+    return null
+  }
+
+  const riskNarratives: Record<string, string> = {
+    Low: 'prioritize stability, capital protection, and steady income.',
+    Medium: 'balance long-term growth with reasonable stability.',
+    High: 'maximize long-term growth even if short-term volatility increases.'
+  }
+
+  const buildExplanation = (categoryLabel: string, custom?: string) => {
+    if (custom) return custom
+    const narrative =
+      riskNarratives[riskPreference as keyof typeof riskNarratives] ??
+      'deliver a balanced mix of growth and stability.'
+    return `${categoryLabel} are selected to ${narrative}`
+  }
+
+  const categoryConfigs = useMemo(
+    () => [
+      { label: 'Equity Funds', keys: ['equity', 'equity_funds'] },
+      { label: 'Debt Funds', keys: ['debt', 'debt_funds'] },
+      { label: 'Hybrid Funds', keys: ['hybrid', 'hybrid_funds'] },
+      { label: 'Gold ETFs', keys: ['gold', 'gold_etf', 'gold_etfs'] },
+      { label: 'Stocks', keys: ['stocks', 'equity_stocks'] }
+    ],
+    []
+  )
+
+  const recommendationSections = categoryConfigs.map((config) => {
+    const items = getCategoryItems(config.keys)
+    return {
+      ...config,
+      items
+    }
+  })
 
   // Dummy SIP projection data
   const sipData = {
@@ -151,25 +280,68 @@ export const RecommendationPage: React.FC = () => {
           />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          {/* Asset Allocation */}
-          <div className="card">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Recommended Asset Allocation
-            </h2>
-            <AllocationDonutChart data={recommendation.allocation} />
+        {/* Top Recommendations */}
+        <section className="card mb-8">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Top Recommendations for You
+              </h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Personalized using live market data and your {riskPreference.toLowerCase()} risk preference.
+              </p>
+            </div>
+            {recommendationLoading && (
+              <span className="text-sm text-gray-500 dark:text-gray-400">Refreshing data...</span>
+            )}
           </div>
 
-          {/* SIP Projection */}
-          <div className="card">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              SIP Growth Projection
-            </h2>
-            <SIPLineGraph data={sipData} />
-          </div>
-        </div>
+          {recommendationError && (
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-200">
+              {recommendationError}
+            </div>
+          )}
 
-        {/* Investment Strategy Explanation */}
+          {!recommendationError && recommendationSections.every((section) => section.items.length === 0) && (
+            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+              {recommendationLoading
+                ? 'Fetching live recommendations...'
+                : 'No live recommendations available. Please try again in a moment.'}
+            </p>
+          )}
+
+          <div className="mt-6 space-y-6">
+            {recommendationSections.map(
+              (section) =>
+                section.items.length > 0 && (
+                  <div key={section.label}>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                      {section.label}
+                    </h3>
+                    <div className="space-y-4">
+                      {section.items.slice(0, 5).map((item: any, idx: number) => (
+                        <RecommendationCard
+                          key={`${section.label}-${idx}-${getItemName(item)}`}
+                          name={getItemName(item)}
+                          category={section.label}
+                          score={getItemScore(item)}
+                          explanation={buildExplanation(section.label, item?.explanation)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )
+            )}
+          </div>
+
+          {recommendationResults?.explanation && (
+            <div className="mt-6">
+              <ExplanationBox text={recommendationResults.explanation} />
+            </div>
+          )}
+        </section>
+
+        {/* Investment Strategy Explanation (before charts to satisfy flow) */}
         <div className="card mb-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
             Investment Strategy Explained
@@ -188,6 +360,22 @@ export const RecommendationPage: React.FC = () => {
                 <span className="text-gray-700 dark:text-gray-300">{feature}</span>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Charts and Analytics */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-8">
+          <div className="card">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              Recommended Asset Allocation
+            </h2>
+            <AllocationDonutChart data={recommendation.allocation} />
+          </div>
+          <div className="card">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              SIP Growth Projection
+            </h2>
+            <SIPLineGraph data={sipData} />
           </div>
         </div>
 
