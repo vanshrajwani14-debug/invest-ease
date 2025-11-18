@@ -5,11 +5,7 @@ from typing import Optional, Dict, Any
 import uvicorn
 
 # Import routers
-<<<<<<< HEAD
-from routes import recommend, compare, sip, report
-=======
 from routes import recommend, compare, sip, feedback, report
->>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
 
 app = FastAPI(title="InvestEase API", version="1.0.0")
 
@@ -26,10 +22,7 @@ app.add_middleware(
 app.include_router(recommend.router)
 app.include_router(compare.router)
 app.include_router(sip.router)
-<<<<<<< HEAD
-=======
 app.include_router(feedback.router)
->>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
 app.include_router(report.router)
 
 # Pydantic models

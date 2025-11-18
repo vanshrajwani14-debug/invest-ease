@@ -1,7 +1,6 @@
 """
-<<<<<<< HEAD
-Category-specific analytical reports.
-Each report is informational, data-backed, and SEBI-compliant.
+Category-specific analytical reports and downloadable PDF summaries.
+All outputs remain informational, data-backed, and SEBI-compliant.
 """
 
 from __future__ import annotations
@@ -10,26 +9,9 @@ import json
 import os
 from datetime import datetime, timedelta
 from enum import Enum
-from statistics import mean
-from typing import Any, Dict, List, Sequence, Tuple, Callable
-
-from fastapi import APIRouter, HTTPException
-
-from utils.scoring import (
-    calc_3yr_return,
-    calc_5yr_return,
-    calc_consistency,
-    calc_returns_from_price_history,
-    calc_volatility,
-    calc_volatility_from_price_history,
-    combined_score,
-=======
-Report route - generates downloadable PDF recommendation report
-"""
-
-from datetime import datetime
 from io import BytesIO
-from typing import Any, Dict, List, Optional
+from statistics import mean
+from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
 
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import StreamingResponse
@@ -39,16 +21,18 @@ from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 
 from routes.ml_placeholder import get_investment_recommendation, generate_explanation
-from routes.recommend import (
-    format_fund_recommendations,
-    format_etf_recommendations,
-    format_stock_recommendations,
->>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
+from utils.scoring import (
+    calc_3yr_return,
+    calc_5yr_return,
+    calc_consistency,
+    calc_returns_from_price_history,
+    calc_volatility,
+    calc_volatility_from_price_history,
+    combined_score,
 )
 
 router = APIRouter()
 
-<<<<<<< HEAD
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "utils", "data")
 MF_LIST_FILE = os.path.join(DATA_DIR, "mutual_funds_list.json")
@@ -779,7 +763,6 @@ def build_structured_report(category: ReportCategory) -> Dict[str, Any]:
     payload["disclaimer"] = DISCLAIMER_TEXT
     return payload
 
-=======
 
 @router.get("/api/recommend/report")
 async def generate_recommendation_report(
@@ -850,6 +833,57 @@ async def generate_recommendation_report(
             status_code=500,
             detail=f"Unable to generate report: {exc}",
         ) from exc
+
+
+def format_fund_recommendations(funds: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    formatted: List[Dict[str, Any]] = []
+    for fund in funds:
+        formatted.append({
+            "name": fund.get("scheme_name", ""),
+            "scheme_code": fund.get("scheme_code", ""),
+            "fund_house": fund.get("fund_house", ""),
+            "scheme_type": fund.get("scheme_type", ""),
+            "scheme_category": fund.get("scheme_category", ""),
+            "nav": fund.get("nav", 0.0),
+            "return_3yr": fund.get("return_3yr", 0.0),
+            "return_5yr": fund.get("return_5yr", 0.0),
+            "volatility": fund.get("volatility", 0.0),
+            "consistency": fund.get("consistency", 0.0),
+            "score": fund.get("score", 0.0),
+        })
+    return formatted
+
+
+def format_etf_recommendations(etfs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    formatted: List[Dict[str, Any]] = []
+    for etf in etfs:
+        formatted.append({
+            "name": etf.get("name", ""),
+            "ticker": etf.get("ticker", ""),
+            "current_price": etf.get("current_price", 0.0),
+            "return_3yr": etf.get("return_3yr", 0.0),
+            "return_5yr": etf.get("return_5yr", 0.0),
+            "volatility": etf.get("volatility", 0.0),
+            "consistency": etf.get("consistency", 0.0),
+            "score": etf.get("score", 0.0),
+        })
+    return formatted
+
+
+def format_stock_recommendations(stocks: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    formatted: List[Dict[str, Any]] = []
+    for stock in stocks:
+        formatted.append({
+            "name": stock.get("name", ""),
+            "ticker": stock.get("ticker", ""),
+            "current_price": stock.get("current_price", 0.0),
+            "return_3yr": stock.get("return_3yr", 0.0),
+            "return_5yr": stock.get("return_5yr", 0.0),
+            "volatility": stock.get("volatility", 0.0),
+            "consistency": stock.get("consistency", 0.0),
+            "score": stock.get("score", 0.0),
+        })
+    return formatted
 
 
 def _build_pdf_report(
@@ -1106,6 +1140,3 @@ def _format_percentage(value: Optional[Any]) -> str:
         return f"{float(value):.2f}%"
     except (TypeError, ValueError):
         return str(value)
-
-
->>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
