@@ -10,6 +10,8 @@ import { RecommendationPage } from './pages/RecommendationPage'
 import { ComparePlansPage } from './pages/ComparePlansPage'
 import { SIPCalculatorPage } from './pages/SIPCalculatorPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+// @ts-ignore - JS module
+import { DetailedReportSelector } from './pages/DetailedReportSelector.jsx'
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
           <Route path="/recommendation" element={<RecommendationPage />} />
           <Route path="/compare" element={<ComparePlansPage />} />
           <Route path="/sip-calculator" element={<SIPCalculatorPage />} />
+          <Route path="/detailed-report" element={<DetailedReportSelector />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
