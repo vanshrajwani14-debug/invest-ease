@@ -11,6 +11,7 @@ import { ComparePlansPage } from './pages/ComparePlansPage'
 import { SIPCalculatorPage } from './pages/SIPCalculatorPage'
 import { LearningHubPage } from './pages/LearningHubPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { FeedbackPage } from './pages/FeedbackPage'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/compare" element={<ComparePlansPage />} />
           <Route path="/sip-calculator" element={<SIPCalculatorPage />} />
           <Route path="/learning-hub" element={<LearningHubPage />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
