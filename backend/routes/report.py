@@ -10,7 +10,7 @@ import os
 from datetime import datetime, timedelta
 from enum import Enum
 from statistics import mean
-from typing import Any, Dict, List, Sequence, Tuple
+from typing import Any, Dict, List, Sequence, Tuple, Callable
 
 from fastapi import APIRouter, HTTPException
 
@@ -49,33 +49,19 @@ async def get_category_report(category: ReportCategory):
     """
     Return a detailed, single-category report.
     """
-    builders = {
-        ReportCategory.MUTUAL_FUNDS: _build_mutual_fund_report,
-        ReportCategory.STOCKS: _build_stock_report,
-        ReportCategory.GOLD: _build_gold_report,
-        ReportCategory.BONDS: _build_bond_report,
-        ReportCategory.SIP: _build_sip_report,
-    }
-
-    builder = builders.get(category)
-    if not builder:
-        raise HTTPException(status_code=404, detail="Unknown category")
-
     try:
-        payload = builder()
+        payload = build_structured_report(category)
     except HTTPException:
         raise
-    except FileNotFoundError as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
     except Exception as exc:  # pragma: no cover - defensive
         raise HTTPException(
             status_code=500, detail=f"Unable to prepare report: {str(exc)}"
         ) from exc
 
-    payload["category"] = category.value
-    payload["disclaimer"] = DISCLAIMER_TEXT
     return payload
 
 
@@ -750,4 +736,23 @@ def _sip_future_value(monthly_amount: float, annual_rate: float, years: int) -> 
     if monthly_rate <= 0:
         return monthly_amount * months
     return monthly_amount * (((1 + monthly_rate) ** months - 1) / monthly_rate) * (1 + monthly_rate)
+
+
+CATEGORY_BUILDERS: Dict[ReportCategory, Callable[[], Dict[str, Any]]] = {
+    ReportCategory.MUTUAL_FUNDS: _build_mutual_fund_report,
+    ReportCategory.STOCKS: _build_stock_report,
+    ReportCategory.GOLD: _build_gold_report,
+    ReportCategory.BONDS: _build_bond_report,
+    ReportCategory.SIP: _build_sip_report,
+}
+
+
+def build_structured_report(category: ReportCategory) -> Dict[str, Any]:
+    builder = CATEGORY_BUILDERS.get(category)
+    if not builder:
+        raise ValueError(f"Unsupported report category: {category}")
+    payload = builder()
+    payload["category"] = category.value
+    payload["disclaimer"] = DISCLAIMER_TEXT
+    return payload
 

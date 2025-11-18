@@ -1,7 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BackButton } from '../components/BackButton'
 import { OptionalInputField } from '../components/OptionalInputField'
+
+const SINGLE_REPORT_OPTIONS = [
+  { value: 'mutualfunds', label: 'Mutual Funds' },
+  { value: 'stocks', label: 'Stocks' },
+  { value: 'bonds', label: 'Government Bonds' },
+  { value: 'gold', label: 'Gold' },
+  { value: 'sip', label: 'SIP (Systematic Investment Plan)' }
+]
+
+type ReportPreference = {
+  reportType: 'full' | 'single'
+  investmentType: string
+}
 
 export const OptionalDetailsPage: React.FC = () => {
   const navigate = useNavigate()
@@ -13,19 +26,76 @@ export const OptionalDetailsPage: React.FC = () => {
     financialGoals: '',
     monthlyExpenses: ''
   })
+  const [reportPreference, setReportPreference] = useState<ReportPreference>({
+    reportType: 'full',
+    investmentType: ''
+  })
+  const [reportError, setReportError] = useState('')
+
+  useEffect(() => {
+    const storedPreference = localStorage.getItem('reportPreference')
+    if (storedPreference) {
+      try {
+        const parsed = JSON.parse(storedPreference)
+        setReportPreference({
+          reportType: parsed.reportType === 'single' ? 'single' : 'full',
+          investmentType: parsed.investmentType || ''
+        })
+      } catch (error) {
+        // ignore parsing errors and keep defaults
+      }
+    }
+  }, [])
 
   const handleInputChange = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
+  const handleReportPreferenceChange = (key: keyof ReportPreference, value: string) => {
+    setReportPreference(prev => ({
+      ...prev,
+      [key]: key === 'reportType' ? (value as 'full' | 'single') : value
+    }))
+    if (reportError) {
+      setReportError('')
+    }
+  }
+
+  const validateReportPreference = () => {
+    if (reportPreference.reportType === 'single' && !reportPreference.investmentType) {
+      setReportError('Please choose a category for the single-investment report.')
+      return false
+    }
+    setReportError('')
+    return true
+  }
+
+  const persistReportPreference = () => {
+    localStorage.setItem(
+      'reportPreference',
+      JSON.stringify({
+        reportType: reportPreference.reportType,
+        investmentType: reportPreference.investmentType
+      })
+    )
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    if (!validateReportPreference()) {
+      return
+    }
     // Store optional data
     localStorage.setItem('optionalDetails', JSON.stringify(formData))
+    persistReportPreference()
     navigate('/recommendation')
   }
 
   const handleSkip = () => {
+    if (!validateReportPreference()) {
+      return
+    }
+    persistReportPreference()
     navigate('/recommendation')
   }
 
@@ -114,6 +184,82 @@ export const OptionalDetailsPage: React.FC = () => {
               placeholder="Enter monthly expenses"
               prefix="₹"
             />
+
+            <div className="border rounded-2xl p-4 sm:p-6 space-y-4">
+              <div>
+                <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+                  Report Preference (optional)
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  Choose between a full investment report or a single-category deep dive. Default is full.
+                </p>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  {
+                    value: 'full',
+                    title: 'Full Investment Report',
+                    description: 'All categories with balanced insights (default)'
+                  },
+                  {
+                    value: 'single',
+                    title: 'Single-Investment Report',
+                    description: 'Focus on one investment category'
+                  }
+                ].map(option => (
+                  <label
+                    key={option.value}
+                    className={`cursor-pointer border rounded-xl p-4 transition ${
+                      reportPreference.reportType === option.value
+                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      className="sr-only"
+                      name="reportPreference"
+                      value={option.value}
+                      checked={reportPreference.reportType === option.value}
+                      onChange={(e) => handleReportPreferenceChange('reportType', e.target.value)}
+                    />
+                    <div>
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">{option.title}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{option.description}</p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+
+              {reportPreference.reportType === 'single' && (
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Select investment category
+                  </label>
+                  <select
+                    value={reportPreference.investmentType}
+                    onChange={(e) => handleReportPreferenceChange('investmentType', e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="">Choose a category</option>
+                    {SINGLE_REPORT_OPTIONS.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  {reportError && (
+                    <p className="text-sm text-red-600">{reportError}</p>
+                  )}
+                </div>
+              )}
+
+              {reportPreference.reportType === 'full' && (
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  We will continue using the full investment report unless you choose otherwise.
+                </p>
+              )}
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-6">
               <button

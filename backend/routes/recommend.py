@@ -6,6 +6,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 from routes.ml_placeholder import get_investment_recommendation, generate_explanation
+from routes.report import ReportCategory, build_structured_report
 
 router = APIRouter()
 
@@ -23,6 +24,190 @@ class UserDetails(BaseModel):
     experience_level: Optional[str] = None
     financial_goals: Optional[str] = None
     monthly_expenses: Optional[float] = None
+    report_type: Optional[str] = "full"
+    investment_type: Optional[str] = None
+
+
+EDUCATIONAL_DISCLAIMER = (
+    "These are educational insights based on general risk categories, not financial advice."
+)
+
+CATEGORY_LABELS = {
+    "mutualfunds": "Mutual Funds",
+    "stocks": "Stocks",
+    "bonds": "Government Bonds",
+    "gold": "Gold",
+    "sip": "Systematic Investment Plan",
+}
+
+SINGLE_REPORT_LIBRARY = {
+    "mutualfunds": {
+        "label": "Mutual Funds",
+        "overview": (
+            "Mutual funds pool investor capital into professionally managed portfolios "
+            "across equity, debt, or hybrid mandates. They follow SEBI-mandated disclosure "
+            "rules and provide diversification even with smaller ticket sizes."
+        ),
+        "expected_return_range": "9% – 12% annualized over a 5+ year horizon",
+        "examples": [
+            "Large-cap diversified equity fund",
+            "Balanced hybrid allocation fund",
+            "Index-tracking passive fund",
+        ],
+        "pros": [
+            "Built-in diversification and liquidity",
+            "Professional fund management with daily NAV disclosure",
+            "Accessible via SIPs or lumpsum with low entry amounts",
+        ],
+        "cons": [
+            "Market volatility can impact NAV in the short term",
+            "Expense ratios reduce net returns",
+            "Some categories have exit loads or lock-in periods",
+        ],
+        "risk_alignment": {
+            "LOW": "Opting for large-cap or balanced funds can suit conservative investors seeking steady growth.",
+            "MEDIUM": "Multi-cap and hybrid funds align well with balanced risk profiles by mixing equity and debt.",
+            "HIGH": "Aggressive equity and sector funds can match higher risk appetites but require longer horizons.",
+        },
+        "allocation_guidance": {
+            "LOW": "20% – 35% of the investable portfolio",
+            "MEDIUM": "35% – 55% of the investable portfolio",
+            "HIGH": "50% – 70% of the investable portfolio",
+        },
+    },
+    "stocks": {
+        "label": "Stocks",
+        "overview": (
+            "Direct equity investing gives you fractional ownership in listed companies. "
+            "Returns depend on earnings growth, sector cycles, and valuation re-ratings."
+        ),
+        "expected_return_range": "11% – 15% annualized across a full market cycle",
+        "examples": [
+            "Large-cap banking leader",
+            "Top-tier IT services company",
+            "Consumer staple blue-chip",
+        ],
+        "pros": [
+            "Highest long-term growth potential among listed assets",
+            "Participates directly in corporate earnings and dividends",
+            "High liquidity on NSE/BSE for frontline names",
+        ],
+        "cons": [
+            "High day-to-day volatility and drawdowns",
+            "Requires continuous tracking of company fundamentals",
+            "Concentrated bets carry company-specific risk",
+        ],
+        "risk_alignment": {
+            "LOW": "Pure equity exposure can feel aggressive; consider staggered allocation or ETFs.",
+            "MEDIUM": "Core large-cap holdings align with moderate risk tolerance if horizon exceeds 5 years.",
+            "HIGH": "Suited for high-risk investors comfortable with volatility in pursuit of compounding.",
+        },
+        "allocation_guidance": {
+            "LOW": "5% – 15% with focus on large caps",
+            "MEDIUM": "15% – 30% blended across market caps",
+            "HIGH": "30% – 50% with tactical satellite positions",
+        },
+    },
+    "bonds": {
+        "label": "Government Bonds",
+        "overview": (
+            "Government securities (G-Secs) are sovereign-backed instruments that pay periodic "
+            "coupons and return principal at maturity. Price movements primarily track interest-rate expectations."
+        ),
+        "expected_return_range": "6.8% – 7.3% yield to maturity based on current curve",
+        "examples": [
+            "10-year benchmark central government bond",
+            "State development loans",
+            "Treasury bill ladder for short tenors",
+        ],
+        "pros": [
+            "Sovereign credit quality with minimal default risk",
+            "Predictable coupon cash flows",
+            "Useful for laddering liabilities or income needs",
+        ],
+        "cons": [
+            "Bond prices fall when interest rates rise",
+            "Long durations lock capital for several years",
+            "Lower return ceiling versus equity-linked assets",
+        ],
+        "risk_alignment": {
+            "LOW": "Matches low-risk profiles by prioritizing capital safety and stable income.",
+            "MEDIUM": "Acts as a stabilizer and liquidity reserve alongside growth assets.",
+            "HIGH": "Provides ballast to offset equity volatility but caps upside.",
+        },
+        "allocation_guidance": {
+            "LOW": "35% – 60% of the portfolio",
+            "MEDIUM": "20% – 35% for stability",
+            "HIGH": "10% – 20% primarily for diversification",
+        },
+    },
+    "gold": {
+        "label": "Gold",
+        "overview": (
+            "Gold is a real asset hedge that historically offsets inflation spikes and currency weakness. "
+            "Indian investors typically access it via Gold ETFs or sovereign gold bonds."
+        ),
+        "expected_return_range": "6% – 9% CAGR (INR terms) over long periods",
+        "examples": [
+            "Gold ETF units backed by physical bullion",
+            "Sovereign Gold Bonds (SGBs)",
+            "Multi-asset funds with gold allocation",
+        ],
+        "pros": [
+            "Acts as a hedge during economic stress",
+            "High liquidity through exchange-traded units",
+            "Diversifies equity-heavy portfolios",
+        ],
+        "cons": [
+            "No intrinsic cash flows",
+            "Can underperform equities for extended phases",
+            "Prices influenced by currency and global flows",
+        ],
+        "risk_alignment": {
+            "LOW": "Provides comfort through stability and inflation hedging.",
+            "MEDIUM": "Supports diversification when paired with equity and debt.",
+            "HIGH": "Serves as a tactical hedge against drawdowns without impacting liquidity.",
+        },
+        "allocation_guidance": {
+            "LOW": "5% – 10% allocation",
+            "MEDIUM": "5% – 12% allocation",
+            "HIGH": "5% – 15% allocation",
+        },
+    },
+    "sip": {
+        "label": "Systematic Investment Plan (SIP)",
+        "overview": (
+            "SIPs automate periodic investing (usually monthly) into mutual funds. "
+            "They enforce discipline, average purchase cost, and align well with salaried cash flows."
+        ),
+        "expected_return_range": "10% – 12% CAGR assumption for diversified equity SIPs",
+        "examples": [
+            "Monthly SIP in diversified equity fund",
+            "Goal-based SIP ladder (education, retirement)",
+            "Step-up SIP that increases contributions annually",
+        ],
+        "pros": [
+            "Rupee-cost averaging reduces timing risk",
+            "Flexible contribution amounts and frequencies",
+            "Ideal for long-term goal planning",
+        ],
+        "cons": [
+            "Still exposed to market risk; NAVs can fall",
+            "Requires commitment across market cycles",
+            "Stopping early reduces compounding benefits",
+        ],
+        "risk_alignment": {
+            "LOW": "SIPs in balanced funds help ease into markets gradually.",
+            "MEDIUM": "Supports disciplined participation in equities without large lump sums.",
+            "HIGH": "Allows aggressive equity exposure while smoothing entry points.",
+        },
+        "allocation_guidance": {
+            "LOW": "Use SIPs for 15% – 25% of deployable surplus",
+            "MEDIUM": "Channel 25% – 40% of surplus via SIPs",
+            "HIGH": "40% – 60% via SIPs to harness compounding",
+        },
+    },
+}
 
 
 @router.post("/api/recommend")
@@ -51,6 +236,33 @@ async def get_recommendation(user_details: UserDetails):
                 detail="investment_amount must be greater than 0"
             )
         
+        report_type = (user_details.report_type or "full").lower()
+        if report_type not in {"full", "single"}:
+            raise HTTPException(
+                status_code=400,
+                detail="report_type must be either 'full' or 'single'"
+            )
+
+        investment_type = (user_details.investment_type or "").lower() or None
+        if report_type == "single":
+            if not investment_type:
+                raise HTTPException(
+                    status_code=400,
+                    detail="investment_type is required when report_type is 'single'"
+                )
+            if investment_type not in SINGLE_REPORT_LIBRARY:
+                raise HTTPException(
+                    status_code=400,
+                    detail="investment_type must be one of: stocks, mutualfunds, bonds, gold, sip"
+                )
+            try:
+                _ = ReportCategory(investment_type)
+            except ValueError:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Unsupported investment category for detailed report"
+                )
+        
         # Convert to dict
         user_data = user_details.dict()
         
@@ -69,11 +281,25 @@ async def get_recommendation(user_details: UserDetails):
             "stocks": format_stock_recommendations(recommendations.get("stocks", [])),
             "explanation": explanation
         }
-        
-        return {
+
+        payload: Dict[str, Any] = {
             "status": "success",
+            "report_type": report_type,
             "recommendations": response
         }
+
+        if report_type == "single" and investment_type:
+            category_enum = ReportCategory(investment_type)
+            structured_report = build_structured_report(category_enum)
+            insights = build_single_investment_summary(
+                investment_type,
+                user_details.risk_preference
+            )
+            insights["analytics"] = structured_report
+            payload["single_report"] = insights
+            payload["selected_category"] = investment_type
+        
+        return payload
         
     except HTTPException:
         raise
@@ -142,3 +368,36 @@ def format_stock_recommendations(stocks: list) -> list:
             "score": stock.get("score", 0.0)
         })
     return formatted
+
+
+def build_single_investment_summary(category_key: str, risk_preference: str) -> Dict[str, Any]:
+    template = SINGLE_REPORT_LIBRARY.get(category_key)
+    if not template:
+        raise ValueError(f"Unsupported category for single report: {category_key}")
+    
+    risk_key = (risk_preference or "Medium").upper()
+    if risk_key not in {"LOW", "MEDIUM", "HIGH"}:
+        risk_key = "MEDIUM"
+    
+    insights = {
+        "overview": template["overview"],
+        "risk_alignment": template["risk_alignment"].get(
+            risk_key,
+            template["risk_alignment"].get("MEDIUM")
+        ),
+        "expected_return_range": template["expected_return_range"],
+        "examples": template["examples"],
+        "pros": template["pros"],
+        "cons": template["cons"],
+        "suggested_allocation": template["allocation_guidance"].get(
+            risk_key,
+            template["allocation_guidance"].get("MEDIUM")
+        ),
+        "disclaimer": EDUCATIONAL_DISCLAIMER,
+    }
+    
+    return {
+        "category": category_key,
+        "label": CATEGORY_LABELS.get(category_key, category_key.title()),
+        "insights": insights
+    }

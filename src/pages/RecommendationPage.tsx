@@ -8,12 +8,32 @@ import { SIPLineGraph } from '../components/SIPLineGraph'
 import { RecommendationCard } from '../components/RecommendationCard'
 import { ExplanationBox } from '../components/ExplanationBox'
 
+type ReportPreference = {
+  reportType: 'full' | 'single'
+  investmentType?: string
+}
+
+const SINGLE_CATEGORY_LABELS: Record<string, string> = {
+  mutualfunds: 'Mutual Funds',
+  stocks: 'Stocks',
+  bonds: 'Government Bonds',
+  gold: 'Gold',
+  sip: 'Systematic Investment Plan'
+}
+
 export const RecommendationPage: React.FC = () => {
   const navigate = useNavigate()
   const [userDetails, setUserDetails] = useState<any>(null)
   const [recommendationResults, setRecommendationResults] = useState<any>(null)
   const [recommendationLoading, setRecommendationLoading] = useState(false)
   const [recommendationError, setRecommendationError] = useState<string | null>(null)
+  const [reportPreference, setReportPreference] = useState<ReportPreference>({
+    reportType: 'full',
+    investmentType: ''
+  })
+  const [preferenceLoaded, setPreferenceLoaded] = useState(false)
+  const [reportMode, setReportMode] = useState<'full' | 'single'>('full')
+  const [singleReportData, setSingleReportData] = useState<any>(null)
 
   const apiBaseUrl =
     (import.meta as any)?.env?.VITE_API_BASE_URL || 'http://localhost:8000'
@@ -32,6 +52,25 @@ export const RecommendationPage: React.FC = () => {
     }
   }, [navigate])
 
+  useEffect(() => {
+    const storedPreference = localStorage.getItem('reportPreference')
+    if (storedPreference) {
+      try {
+        const parsed = JSON.parse(storedPreference)
+        setReportPreference({
+          reportType: parsed.reportType === 'single' ? 'single' : 'full',
+          investmentType: parsed.investmentType || ''
+        })
+      } catch (error) {
+        setReportPreference({
+          reportType: 'full',
+          investmentType: ''
+        })
+      }
+    }
+    setPreferenceLoaded(true)
+  }, [])
+
   const parseOptionalNumber = (value: any) => {
     if (value === undefined || value === null || value === '') return undefined
     const parsed = Number(value)
@@ -39,7 +78,7 @@ export const RecommendationPage: React.FC = () => {
   }
 
   const fetchRecommendations = useCallback(
-    async (details: any) => {
+    async (details: any, preference: ReportPreference) => {
       setRecommendationLoading(true)
       setRecommendationError(null)
 
@@ -52,7 +91,9 @@ export const RecommendationPage: React.FC = () => {
         time_horizon: details.timeHorizon ?? details.time_horizon,
         experience_level: details.experienceLevel ?? details.experience_level,
         financial_goals: details.financialGoals ?? details.financial_goals,
-        monthly_expenses: parseOptionalNumber(details.monthlyExpenses ?? details.monthly_expenses)
+        monthly_expenses: parseOptionalNumber(details.monthlyExpenses ?? details.monthly_expenses),
+        report_type: preference?.reportType ?? 'full',
+        investment_type: preference?.investmentType || undefined
       }
 
       try {
@@ -71,9 +112,14 @@ export const RecommendationPage: React.FC = () => {
         const data = await response.json()
         const normalized = data?.recommendations ?? data
         setRecommendationResults(normalized)
+        const serverReportType = data?.report_type === 'single' ? 'single' : 'full'
+        setReportMode(serverReportType)
+        setSingleReportData(data?.single_report ?? null)
       } catch (error: any) {
         setRecommendationError(error.message || 'Failed to load recommendations')
         setRecommendationResults(null)
+        setReportMode('full')
+        setSingleReportData(null)
       } finally {
         setRecommendationLoading(false)
       }
@@ -82,10 +128,10 @@ export const RecommendationPage: React.FC = () => {
   )
 
   useEffect(() => {
-    if (userDetails) {
-      fetchRecommendations(userDetails)
+    if (userDetails && preferenceLoaded) {
+      fetchRecommendations(userDetails, reportPreference)
     }
-  }, [userDetails, fetchRecommendations])
+  }, [userDetails, preferenceLoaded, reportPreference, fetchRecommendations])
 
   // Dummy data based on risk preference (fallback for charts & legacy sections)
   const getDummyRecommendation = () => {
@@ -177,6 +223,53 @@ export const RecommendationPage: React.FC = () => {
     return null
   }
 
+  const formatSingleMetricValue = (value: any) => {
+    if (value === null || value === undefined) return 'NA'
+    if (typeof value === 'number') {
+      return value.toLocaleString('en-IN', { maximumFractionDigits: 2 })
+    }
+    if (typeof value === 'object') {
+      return Object.entries(value)
+        .map(([key, val]) => `${key}: ${val}`)
+        .join(', ')
+    }
+    return value
+  }
+
+  const buildSingleItemExplanation = (item: any) => {
+    const extras = item?.extra_metrics || {}
+    const parts: string[] = []
+
+    const returns5y = item?.['5y_return'] ?? item?.return_5yr
+    const returns3y = item?.['3y_return'] ?? item?.return_3yr
+    if (returns5y) {
+      parts.push(`5Y CAGR ${returns5y}%`)
+    } else if (returns3y) {
+      parts.push(`3Y CAGR ${returns3y}%`)
+    }
+
+    if (typeof extras.yield === 'number') {
+      parts.push(`Yield ${extras.yield}%`)
+    }
+    if (typeof extras.expense_ratio === 'number') {
+      parts.push(`Expense Ratio ${extras.expense_ratio}%`)
+    }
+    if (typeof extras.consistency === 'number') {
+      parts.push(`Consistency ${extras.consistency}%`)
+    }
+    if (typeof extras.volatility === 'number') {
+      parts.push(`Volatility ${extras.volatility}%`)
+    }
+    if (typeof extras.duration === 'number') {
+      parts.push(`Duration ${extras.duration} yrs`)
+    }
+    if (typeof extras.beta === 'number') {
+      parts.push(`Beta ${extras.beta}`)
+    }
+
+    return parts.length ? parts.join(' • ') : undefined
+  }
+
   const riskNarratives: Record<string, string> = {
     Low: 'prioritize stability, capital protection, and steady income.',
     Medium: 'balance long-term growth with reasonable stability.',
@@ -209,6 +302,203 @@ export const RecommendationPage: React.FC = () => {
       items
     }
   })
+
+  const renderFullRecommendationSection = () => (
+    <section className="card mb-8">
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Automated Investment Insights (For Informational Purposes Only)
+          </h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
+            This is not investment advice. The results shown are automated, data-based evaluations. Please consult a SEBI-registered investment advisor before making investment decisions.
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+            Based on live market data and your {riskPreference.toLowerCase()} risk preference.
+          </p>
+        </div>
+        {recommendationLoading && (
+          <span className="text-sm text-gray-500 dark:text-gray-400">Refreshing data...</span>
+        )}
+      </div>
+
+      {recommendationError && (
+        <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-200">
+          {recommendationError}
+        </div>
+      )}
+
+      {!recommendationError && recommendationSections.every((section) => section.items.length === 0) && (
+        <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
+          {recommendationLoading
+            ? 'Fetching live recommendations...'
+            : 'No live recommendations available. Please try again in a moment.'}
+        </p>
+      )}
+
+      <div className="mt-6 space-y-6">
+        {recommendationSections.map(
+          (section) =>
+            section.items.length > 0 && (
+              <div key={section.label}>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                  {section.label}
+                </h3>
+                <div className="space-y-4">
+                  {section.items.slice(0, 5).map((item: any, idx: number) => (
+                    <RecommendationCard
+                      key={`${section.label}-${idx}-${getItemName(item)}`}
+                      name={getItemName(item)}
+                      category={section.label}
+                      score={getItemScore(item)}
+                      explanation={buildExplanation(section.label, item?.explanation)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )
+        )}
+      </div>
+
+      {recommendationResults?.explanation && (
+        <div className="mt-6">
+          <ExplanationBox text={recommendationResults.explanation} />
+        </div>
+      )}
+    </section>
+  )
+
+  const renderSingleRecommendationSection = () => {
+    if (!singleReportData) return null
+    const insights = singleReportData.insights || {}
+    const analytics = singleReportData.analytics || {}
+    const label =
+      singleReportData.label ||
+      SINGLE_CATEGORY_LABELS[singleReportData.category as keyof typeof SINGLE_CATEGORY_LABELS] ||
+      'Selected Category'
+    const topItems = analytics.top_items || []
+
+    return (
+      <section className="card mb-8">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              Detailed {label} Report
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+              Tailored to your {riskPreference.toLowerCase()} risk preference using data-backed metrics.
+            </p>
+          </div>
+          {recommendationLoading && (
+            <span className="text-sm text-gray-500 dark:text-gray-400">Refreshing data...</span>
+          )}
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mt-6">
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Overview</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{insights.overview}</p>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Risk alignment</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{insights.risk_alignment}</p>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Expected return range</h3>
+              <p className="text-sm text-gray-900 dark:text-gray-100 mt-2 font-semibold">
+                {insights.expected_return_range}
+              </p>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Suggested allocation</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{insights.suggested_allocation}</p>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Example types</h3>
+              <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                {(insights.examples || []).map((example: string) => (
+                  <li key={example}>{example}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Pros</h3>
+              <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                {(insights.pros || []).map((pro: string) => (
+                  <li key={pro}>{pro}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">Cons</h3>
+              <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mt-2 space-y-1">
+                {(insights.cons || []).map((con: string) => (
+                  <li key={con}>{con}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {analytics.metrics && (
+          <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Object.entries(analytics.metrics).map(([key, value]) => (
+              <div
+                key={key}
+                className="p-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60"
+              >
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                  {key.replace(/_/g, ' ')}
+                </p>
+                <p className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-1">
+                  {formatSingleMetricValue(value)}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {topItems.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Data-backed highlights
+            </h3>
+            <div className="space-y-4 mt-4">
+              {topItems.map((item: any, idx: number) => (
+                <RecommendationCard
+                  key={`${label}-${idx}-${item.name}`}
+                  name={item.name}
+                  category={label}
+                  score={item.score}
+                  explanation={buildSingleItemExplanation(item)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {analytics.factors_analyzed && (
+          <div className="mt-8">
+            <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              Factors analyzed
+            </h3>
+            <ul className="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+              {analytics.factors_analyzed.map((factor: string) => (
+                <li key={factor}>{factor}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div className="mt-6">
+          <ExplanationBox text={insights.disclaimer || analytics.disclaimer} />
+        </div>
+      </section>
+    )
+  }
 
   // Dummy SIP projection data
   const sipData = {
@@ -258,6 +548,11 @@ export const RecommendationPage: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-400">
             Based on your {userDetails.riskPreference.toLowerCase()} risk preference and ₹{parseInt(userDetails.investmentAmount).toLocaleString()} investment
           </p>
+          {reportMode === 'single' && singleReportData && (
+            <p className="text-sm text-primary-600 dark:text-primary-300 mt-3">
+              Mode: Single-Investment Report — {singleReportData.label || SINGLE_CATEGORY_LABELS[(singleReportData.category || '') as keyof typeof SINGLE_CATEGORY_LABELS] || 'Selected Category'}
+            </p>
+          )}
         </div>
 
         {/* Summary Cards */}
@@ -280,107 +575,49 @@ export const RecommendationPage: React.FC = () => {
           />
         </div>
 
-        {/* Top Recommendations */}
-        <section className="card mb-8">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Automated Investment Insights (For Informational Purposes Only)
+        {reportMode === 'single' ? renderSingleRecommendationSection() : renderFullRecommendationSection()}
+
+        {reportMode === 'full' && (
+          <>
+            {/* Investment Strategy Explanation (before charts to satisfy flow) */}
+            <div className="card mb-8">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                Investment Strategy Explained
               </h2>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
-                This is not investment advice. The results shown are automated, data-based evaluations. Please consult a SEBI-registered investment advisor before making investment decisions.
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                {recommendation.explanation}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                Based on live market data and your {riskPreference.toLowerCase()} risk preference.
-              </p>
-            </div>
-            {recommendationLoading && (
-              <span className="text-sm text-gray-500 dark:text-gray-400">Refreshing data...</span>
-            )}
-          </div>
-
-          {recommendationError && (
-            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-200">
-              {recommendationError}
-            </div>
-          )}
-
-          {!recommendationError && recommendationSections.every((section) => section.items.length === 0) && (
-            <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
-              {recommendationLoading
-                ? 'Fetching live recommendations...'
-                : 'No live recommendations available. Please try again in a moment.'}
-            </p>
-          )}
-
-          <div className="mt-6 space-y-6">
-            {recommendationSections.map(
-              (section) =>
-                section.items.length > 0 && (
-                  <div key={section.label}>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                      {section.label}
-                    </h3>
-                    <div className="space-y-4">
-                      {section.items.slice(0, 5).map((item: any, idx: number) => (
-                        <RecommendationCard
-                          key={`${section.label}-${idx}-${getItemName(item)}`}
-                          name={getItemName(item)}
-                          category={section.label}
-                          score={getItemScore(item)}
-                          explanation={buildExplanation(section.label, item?.explanation)}
-                        />
-                      ))}
-                    </div>
+              
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                Key Benefits of This Plan:
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {recommendation.features.map((feature, index) => (
+                  <div key={index} className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+                    <span className="text-gray-700 dark:text-gray-300">{feature}</span>
                   </div>
-                )
-            )}
-          </div>
-
-          {recommendationResults?.explanation && (
-            <div className="mt-6">
-              <ExplanationBox text={recommendationResults.explanation} />
-            </div>
-          )}
-        </section>
-
-        {/* Investment Strategy Explanation (before charts to satisfy flow) */}
-        <div className="card mb-8">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-            Investment Strategy Explained
-          </h2>
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-            {recommendation.explanation}
-          </p>
-          
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-            Key Benefits of This Plan:
-          </h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            {recommendation.features.map((feature, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
-                <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        {/* Charts and Analytics */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          <div className="card">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Recommended Asset Allocation
-            </h2>
-            <AllocationDonutChart data={recommendation.allocation} />
-          </div>
-          <div className="card">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              SIP Growth Projection
-            </h2>
-            <SIPLineGraph data={sipData} />
-          </div>
-        </div>
+            {/* Charts and Analytics */}
+            <div className="grid lg:grid-cols-2 gap-8 mb-8">
+              <div className="card">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                  Recommended Asset Allocation
+                </h2>
+                <AllocationDonutChart data={recommendation.allocation} />
+              </div>
+              <div className="card">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                  SIP Growth Projection
+                </h2>
+                <SIPLineGraph data={sipData} />
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
