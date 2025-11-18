@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { TrendingUp, Calculator, User, LogOut } from 'lucide-react'
+import { TrendingUp, Calculator, User, LogOut, BookOpen, MessageSquare } from 'lucide-react'
 
 export const Navbar: React.FC = () => {
   const location = useLocation()
@@ -27,6 +27,28 @@ export const Navbar: React.FC = () => {
           </Link>
           
           <div className="flex items-center space-x-4">
+            <Link
+              to="/learning-hub"
+              className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                location.pathname === '/learning-hub'
+                  ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
+                  : 'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
+              }`}
+            >
+              <BookOpen className="h-4 w-4" />
+              <span>Learning Hub</span>
+            </Link>
+            <Link
+              to="/feedback"
+              className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                location.pathname === '/feedback'
+                  ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
+                  : 'text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
+              }`}
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span>Feedback</span>
+            </Link>
             <Link
               to="/sip-calculator"
               className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
