@@ -11,12 +11,9 @@ import { ComparePlansPage } from './pages/ComparePlansPage'
 import { SIPCalculatorPage } from './pages/SIPCalculatorPage'
 import { LearningHubPage } from './pages/LearningHubPage'
 import { NotFoundPage } from './pages/NotFoundPage'
-<<<<<<< HEAD
+import { FeedbackPage } from './pages/FeedbackPage'
 // @ts-ignore - JS module
 import { DetailedReportSelector } from './pages/DetailedReportSelector.jsx'
-=======
-import { FeedbackPage } from './pages/FeedbackPage'
->>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
 
 function App() {
   return (
@@ -31,12 +28,9 @@ function App() {
           <Route path="/recommendation" element={<RecommendationPage />} />
           <Route path="/compare" element={<ComparePlansPage />} />
           <Route path="/sip-calculator" element={<SIPCalculatorPage />} />
-<<<<<<< HEAD
-          <Route path="/detailed-report" element={<DetailedReportSelector />} />
-=======
           <Route path="/learning-hub" element={<LearningHubPage />} />
           <Route path="/feedback" element={<FeedbackPage />} />
->>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
+          <Route path="/detailed-report" element={<DetailedReportSelector />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
