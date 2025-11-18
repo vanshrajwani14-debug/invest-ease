@@ -285,10 +285,13 @@ export const RecommendationPage: React.FC = () => {
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Top Recommendations for You
+                Automated Investment Insights (For Informational Purposes Only)
               </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Personalized using live market data and your {riskPreference.toLowerCase()} risk preference.
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 italic">
+                This is not investment advice. The results shown are automated, data-based evaluations. Please consult a SEBI-registered investment advisor before making investment decisions.
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+                Based on live market data and your {riskPreference.toLowerCase()} risk preference.
               </p>
             </div>
             {recommendationLoading && (
