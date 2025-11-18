@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Download, BarChart3 } from 'lucide-react'
+import { BarChart3 } from 'lucide-react'
 import { BackButton } from '../components/BackButton'
 import { SummaryCard } from '../components/SummaryCard'
 import { AllocationDonutChart } from '../components/AllocationDonutChart'
@@ -27,7 +27,6 @@ export const RecommendationPage: React.FC = () => {
   const [recommendationResults, setRecommendationResults] = useState<any>(null)
   const [recommendationLoading, setRecommendationLoading] = useState(false)
   const [recommendationError, setRecommendationError] = useState<string | null>(null)
-<<<<<<< HEAD
   const [reportPreference, setReportPreference] = useState<ReportPreference>({
     reportType: 'full',
     investmentType: ''
@@ -35,9 +34,6 @@ export const RecommendationPage: React.FC = () => {
   const [preferenceLoaded, setPreferenceLoaded] = useState(false)
   const [reportMode, setReportMode] = useState<'full' | 'single'>('full')
   const [singleReportData, setSingleReportData] = useState<any>(null)
-=======
-  const [reportDownloading, setReportDownloading] = useState(false)
->>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
 
   const apiBaseUrl =
     (import.meta as any)?.env?.VITE_API_BASE_URL || 'http://localhost:8000'
@@ -511,55 +507,6 @@ export const RecommendationPage: React.FC = () => {
     returns: [13000, 27500, 43200, 60800, 81500]
   }
 
-  const handleDownloadPDF = async () => {
-    if (!userDetails) return
-    setReportDownloading(true)
-
-    const params = new URLSearchParams()
-    const baseAge = userDetails.age ?? userDetails.userAge ?? 30
-    const baseInvestment = userDetails.investmentAmount ?? userDetails.investment_amount ?? 0
-    const baseRisk = userDetails.riskPreference ?? userDetails.risk_preference ?? 'Medium'
-
-    params.append('age', String(baseAge))
-    params.append('investment_amount', String(baseInvestment))
-    params.append('risk_preference', baseRisk)
-
-    const appendOptional = (key: string, value: any) => {
-      if (value === undefined || value === null || value === '') return
-      params.append(key, String(value))
-    }
-
-    appendOptional('income', userDetails.monthlyIncome ?? userDetails.monthly_income)
-    appendOptional('savings', userDetails.savings ?? userDetails.totalSavings ?? userDetails.netWorth)
-    appendOptional('time_horizon', userDetails.timeHorizon ?? userDetails.time_horizon)
-    appendOptional('experience_level', userDetails.experienceLevel ?? userDetails.experience_level)
-    appendOptional('goals', userDetails.financialGoals ?? userDetails.financial_goals)
-    appendOptional('expenses', userDetails.monthlyExpenses ?? userDetails.monthly_expenses)
-
-    try {
-      const response = await fetch(`${apiBaseUrl}/api/recommend/report?${params.toString()}`)
-      if (!response.ok) {
-        const errorPayload = await response.json().catch(() => ({}))
-        throw new Error(errorPayload.detail || 'Unable to download report')
-      }
-
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = 'recommendation_report.pdf'
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      window.URL.revokeObjectURL(url)
-    } catch (error: any) {
-      console.error('Error downloading report:', error)
-      alert(error.message || 'Unable to download report right now.')
-    } finally {
-      setReportDownloading(false)
-    }
-  }
-
   if (!userDetails || !recommendation) {
     return <div>Loading...</div>
   }
@@ -657,15 +604,6 @@ export const RecommendationPage: React.FC = () => {
           >
             <BarChart3 className="h-4 w-4" />
             <span>Compare Plans</span>
-          </button>
-          
-          <button
-            onClick={handleDownloadPDF}
-            disabled={reportDownloading}
-            className={`btn-primary flex items-center justify-center space-x-2 ${reportDownloading ? 'opacity-75 cursor-not-allowed' : ''}`}
-          >
-            <Download className="h-4 w-4" />
-            <span>{reportDownloading ? 'Preparing Report...' : 'Download Report'}</span>
           </button>
         </div>
       </div>
