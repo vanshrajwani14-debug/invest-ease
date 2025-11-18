@@ -41,9 +41,9 @@ const learningHubContent: Topic[] = [
       {
         id: 'sip-1',
         title: 'What is SIP? Complete Guide for Beginners',
-        url: 'https://www.youtube.com/watch?v=5xXJ5K5K5K5',
-        duration: '8:30',
-        thumbnail: 'https://img.youtube.com/vi/5xXJ5K5K5K5/mqdefault.jpg'
+        url: 'https://youtu.be/PbldLCsspgE',
+        duration: '19:31',
+        thumbnail: 'https://img.youtube.com/vi/PbldLCsspgE/maxresdefault.jpg'
       },
       {
         id: 'sip-2',
@@ -75,24 +75,24 @@ const learningHubContent: Topic[] = [
     videos: [
       {
         id: 'mf-1',
-        title: 'Mutual Funds Explained: Basics for Beginners',
-        url: 'https://www.youtube.com/watch?v=8a8a8a8a8a8',
-        duration: '15:20',
-        thumbnail: 'https://img.youtube.com/vi/8a8a8a8a8a8/mqdefault.jpg'
+        title: 'What is a Mutual Fund and How Does It Work?',
+        url: 'https://youtu.be/PbldLCsspgE',
+        duration: '19:31',
+        thumbnail: 'https://img.youtube.com/vi/PbldLCsspgE/maxresdefault.jpg'
       },
       {
         id: 'mf-2',
-        title: 'Types of Mutual Funds: Equity, Debt, Hybrid',
-        url: 'https://www.youtube.com/watch?v=9b9b9b9b9b9',
-        duration: '18:45',
-        thumbnail: 'https://img.youtube.com/vi/9b9b9b9b9b9/mqdefault.jpg'
+        title: 'Mutual Fund Categories Explained',
+        url: 'https://youtu.be/V5wn0oGe2Ss',
+        duration: '6:49',
+        thumbnail: 'https://img.youtube.com/vi/V5wn0oGe2Ss/maxresdefault.jpg'
       },
       {
         id: 'mf-3',
-        title: 'How to Choose the Right Mutual Fund',
-        url: 'https://www.youtube.com/watch?v=0c0c0c0c0c0',
-        duration: '14:10',
-        thumbnail: 'https://img.youtube.com/vi/0c0c0c0c0c0/mqdefault.jpg'
+        title: 'Mutual Funds vs Index Funds vs ETFs vs Hedge Funds Explained',
+        url: 'https://youtu.be/BxNxnj_JWTY',
+        duration: '15:11',
+        thumbnail: 'https://img.youtube.com/vi/BxNxnj_JWTY/maxresdefault.jpg'
       }
     ]
   },
