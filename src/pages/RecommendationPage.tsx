@@ -27,6 +27,7 @@ export const RecommendationPage: React.FC = () => {
   const [recommendationResults, setRecommendationResults] = useState<any>(null)
   const [recommendationLoading, setRecommendationLoading] = useState(false)
   const [recommendationError, setRecommendationError] = useState<string | null>(null)
+<<<<<<< HEAD
   const [reportPreference, setReportPreference] = useState<ReportPreference>({
     reportType: 'full',
     investmentType: ''
@@ -34,6 +35,9 @@ export const RecommendationPage: React.FC = () => {
   const [preferenceLoaded, setPreferenceLoaded] = useState(false)
   const [reportMode, setReportMode] = useState<'full' | 'single'>('full')
   const [singleReportData, setSingleReportData] = useState<any>(null)
+=======
+  const [reportDownloading, setReportDownloading] = useState(false)
+>>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
 
   const apiBaseUrl =
     (import.meta as any)?.env?.VITE_API_BASE_URL || 'http://localhost:8000'
@@ -508,25 +512,51 @@ export const RecommendationPage: React.FC = () => {
   }
 
   const handleDownloadPDF = async () => {
+    if (!userDetails) return
+    setReportDownloading(true)
+
+    const params = new URLSearchParams()
+    const baseAge = userDetails.age ?? userDetails.userAge ?? 30
+    const baseInvestment = userDetails.investmentAmount ?? userDetails.investment_amount ?? 0
+    const baseRisk = userDetails.riskPreference ?? userDetails.risk_preference ?? 'Medium'
+
+    params.append('age', String(baseAge))
+    params.append('investment_amount', String(baseInvestment))
+    params.append('risk_preference', baseRisk)
+
+    const appendOptional = (key: string, value: any) => {
+      if (value === undefined || value === null || value === '') return
+      params.append(key, String(value))
+    }
+
+    appendOptional('income', userDetails.monthlyIncome ?? userDetails.monthly_income)
+    appendOptional('savings', userDetails.savings ?? userDetails.totalSavings ?? userDetails.netWorth)
+    appendOptional('time_horizon', userDetails.timeHorizon ?? userDetails.time_horizon)
+    appendOptional('experience_level', userDetails.experienceLevel ?? userDetails.experience_level)
+    appendOptional('goals', userDetails.financialGoals ?? userDetails.financial_goals)
+    appendOptional('expenses', userDetails.monthlyExpenses ?? userDetails.monthly_expenses)
+
     try {
-      const response = await fetch('https://builder.empromptu.ai/api_tools/database/query', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer beb20e01818d025fb8b5a8c55fd12247',
-          'X-Generated-App-ID': '6b451cdd-c751-4151-bf30-5751562c9a9b',
-          'X-Usage-Key': 'c42100c7fbb5e7798f2d07e0a27737a2'
-        },
-        body: JSON.stringify({
-          query: "INSERT INTO app_6b451cddc7514151bf305751562c9a9b.calculation_history (user_id, calculation_type, input_data, result_data, created_at) VALUES ($1, $2, $3, $4, NOW())",
-          params: [1, 'recommendation', JSON.stringify(userDetails), JSON.stringify(recommendation)]
-        })
-      })
-      
-      alert('PDF download feature coming soon!')
-    } catch (error) {
-      console.error('Error saving calculation:', error)
-      alert('PDF download feature coming soon!')
+      const response = await fetch(`${apiBaseUrl}/api/recommend/report?${params.toString()}`)
+      if (!response.ok) {
+        const errorPayload = await response.json().catch(() => ({}))
+        throw new Error(errorPayload.detail || 'Unable to download report')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'recommendation_report.pdf'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error: any) {
+      console.error('Error downloading report:', error)
+      alert(error.message || 'Unable to download report right now.')
+    } finally {
+      setReportDownloading(false)
     }
   }
 
@@ -631,10 +661,11 @@ export const RecommendationPage: React.FC = () => {
           
           <button
             onClick={handleDownloadPDF}
-            className="btn-primary flex items-center justify-center space-x-2"
+            disabled={reportDownloading}
+            className={`btn-primary flex items-center justify-center space-x-2 ${reportDownloading ? 'opacity-75 cursor-not-allowed' : ''}`}
           >
             <Download className="h-4 w-4" />
-            <span>Download Report</span>
+            <span>{reportDownloading ? 'Preparing Report...' : 'Download Report'}</span>
           </button>
         </div>
       </div>

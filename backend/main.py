@@ -5,7 +5,11 @@ from typing import Optional, Dict, Any
 import uvicorn
 
 # Import routers
+<<<<<<< HEAD
 from routes import recommend, compare, sip, report
+=======
+from routes import recommend, compare, sip, feedback, report
+>>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
 
 app = FastAPI(title="InvestEase API", version="1.0.0")
 
@@ -22,9 +26,13 @@ app.add_middleware(
 app.include_router(recommend.router)
 app.include_router(compare.router)
 app.include_router(sip.router)
+<<<<<<< HEAD
+=======
+app.include_router(feedback.router)
+>>>>>>> 734bbeb6dc137c0c71f15e05cf68bfe1fc6acec3
 app.include_router(report.router)
 
-# Pydantic models (kept for backward compatibility if needed)
+# Pydantic models
 class UserDetails(BaseModel):
     age: int
     investment_amount: float
@@ -41,31 +49,20 @@ class SIPCalculation(BaseModel):
     expected_return: float
     time_period: float
 
-# Root route
 @app.get("/")
 async def root():
     return {"message": "InvestEase API is running"}
 
-# PDF report route (placeholder - not modified per requirements)
 @app.get("/api/report/pdf")
 async def generate_pdf_report():
-    """
-    TODO: Implement PDF generation using reportlab or similar
-    Currently returns placeholder response
-    """
     return {
         "status": "success",
         "message": "PDF generation feature coming soon",
         "download_url": None
     }
 
-# ML prediction route (placeholder - not modified per requirements)
 @app.post("/api/ml/predict")
 async def ml_prediction(user_details: UserDetails):
-    """
-    TODO: Implement ML model for investment prediction
-    This would include risk assessment, return prediction, etc.
-    """
     return {
         "status": "success",
         "message": "ML prediction feature coming soon",

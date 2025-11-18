@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TrendingUp, Shield, Target, Zap } from 'lucide-react'
+import { TrendingUp, Shield, Target, Zap, BookOpen } from 'lucide-react'
 
 export const LandingPage: React.FC = () => {
   const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
@@ -81,6 +81,31 @@ export const LandingPage: React.FC = () => {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Learning Hub Section */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="card max-w-3xl mx-auto text-center">
+            <div className="flex justify-center mb-6">
+              <BookOpen className="h-16 w-16 text-primary-600" />
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+              Learn the Basics
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+              New to investing? Start with our Learning Hub to understand SIPs, mutual funds, stocks, and more. 
+              Learn at your own pace with simple explanations and helpful videos.
+            </p>
+            <Link
+              to="/learning-hub"
+              className="inline-flex items-center px-8 py-4 text-lg font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl"
+            >
+              <BookOpen className="mr-2 h-5 w-5" />
+              Explore Learning Hub
+            </Link>
           </div>
         </div>
       </section>
