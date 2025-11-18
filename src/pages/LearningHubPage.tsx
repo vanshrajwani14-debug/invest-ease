@@ -29,7 +29,8 @@ const learningHubContent: Topic[] = [
   {
     id: 'sip',
     title: 'SIP (Systematic Investment Plan)',
-    description: 'SIP is a disciplined approach to investing where you invest a fixed amount regularly (monthly) in mutual funds. It helps you build wealth gradually through the power of compounding and rupee cost averaging.',
+    description:
+      'SIP is a disciplined approach to investing where you invest a fixed amount regularly (monthly) in mutual funds. It helps you build wealth gradually through the power of compounding and rupee cost averaging.',
     keyPoints: [
       'Start with as little as ₹500 per month',
       'Automatically invest on a fixed date each month',
@@ -41,30 +42,31 @@ const learningHubContent: Topic[] = [
       {
         id: 'sip-1',
         title: 'What is SIP? Complete Guide for Beginners',
-        url: 'https://youtu.be/PbldLCsspgE',
-        duration: '19:31',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        url: 'https://youtu.be/1DRq8N7SpYc',
+        duration: '18:36',
+        thumbnail: 'https://img.youtube.com/vi/1DRq8N7SpYc/maxresdefault.jpg'
       },
       {
         id: 'sip-2',
-        title: 'How SIP Works: Power of Compounding',
-        url: 'https://www.youtube.com/watch?v=6yY6Y6Y6Y6Y',
-        duration: '10:15',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'How To Do SIP?',
+        url: 'https://youtu.be/rAqzpRZa78E',
+        duration: '8:04',
+        thumbnail: 'https://img.youtube.com/vi/rAqzpRZa78E/maxresdefault.jpg'
       },
       {
         id: 'sip-3',
-        title: 'SIP vs Lump Sum Investment: Which is Better?',
-        url: 'https://www.youtube.com/watch?v=7zZ7Z7Z7Z7Z',
-        duration: '12:00',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'SIP vs Lump Sum: Which Should You Choose?',
+        url: 'https://www.youtube.com/watch?v=HUA4qvYdZxk',
+        duration: '9:12',
+        thumbnail: 'https://img.youtube.com/vi/HUA4qvYdZxk/mqdefault.jpg'
       }
     ]
   },
   {
     id: 'mutual-funds',
     title: 'Mutual Funds',
-    description: 'Mutual funds pool money from multiple investors to invest in a diversified portfolio of stocks, bonds, or other securities. They are managed by professional fund managers, making them ideal for beginners who want expert management.',
+    description:
+      'Mutual funds pool money from multiple investors to invest in a diversified portfolio of stocks, bonds, or other securities. They are managed by professional fund managers, making them ideal for beginners who want expert management.',
     keyPoints: [
       'Professional fund management by experts',
       'Diversification across multiple stocks/bonds',
@@ -99,7 +101,8 @@ const learningHubContent: Topic[] = [
   {
     id: 'stocks',
     title: 'Stocks',
-    description: 'Stocks represent ownership in a company. When you buy a stock, you become a shareholder and can benefit from the company\'s growth through price appreciation and dividends. Stocks offer higher returns but come with higher risk.',
+    description:
+      "Stocks represent ownership in a company. When you buy a stock, you become a shareholder and can benefit from the company's growth through price appreciation and dividends. Stocks offer higher returns but come with higher risk.",
     keyPoints: [
       'Ownership stake in a company',
       'Potential for high returns over long term',
@@ -110,31 +113,32 @@ const learningHubContent: Topic[] = [
     videos: [
       {
         id: 'stocks-1',
-        title: 'Stock Market Basics: How Stocks Work',
-        url: 'https://www.youtube.com/watch?v=1d1d1d1d1d1',
-        duration: '12:30',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'What are Stocks and How do They Work?',
+        url: 'https://youtu.be/4e_o4Xar5t0',
+        duration: '10:01',
+        thumbnail: 'https://img.youtube.com/vi/4e_o4Xar5t0/maxresdefault.jpg'
       },
       {
         id: 'stocks-2',
-        title: 'How to Start Investing in Stocks: Step by Step',
-        url: 'https://www.youtube.com/watch?v=2e2e2e2e2e2',
-        duration: '16:45',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'How Does the Stock Market Work?',
+        url: 'https://youtu.be/A7fZp9dwELo',
+        duration: '8:48',
+        thumbnail: 'https://img.youtube.com/vi/A7fZp9dwELo/maxresdefault.jpg'
       },
       {
         id: 'stocks-3',
-        title: 'Stock Market vs Mutual Funds: Which Should You Choose?',
-        url: 'https://www.youtube.com/watch?v=3f3f3f3f3f3',
-        duration: '13:20',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'Types of Stocks Explained',
+        url: 'https://www.youtube.com/watch?v=oVVt6P2q-6c',
+        duration: '3:10',
+        thumbnail: 'https://img.youtube.com/vi/oVVt6P2q-6c/maxresdefault.jpg'
       }
     ]
   },
   {
     id: 'gold',
     title: 'Gold',
-    description: 'Gold is a traditional safe-haven investment that acts as a hedge against inflation and economic uncertainty. You can invest in gold through physical gold, Gold ETFs, Gold Mutual Funds, or Sovereign Gold Bonds. Gold typically performs well during market downturns and currency devaluation.',
+    description:
+      'Gold is a traditional safe-haven investment that acts as a hedge against inflation and economic uncertainty. You can invest in gold through physical gold, Gold ETFs, Gold Mutual Funds, or Sovereign Gold Bonds. Gold typically performs well during market downturns and currency devaluation.',
     keyPoints: [
       'Acts as a hedge against inflation and economic uncertainty',
       'Low correlation with stocks - provides portfolio diversification',
@@ -146,31 +150,32 @@ const learningHubContent: Topic[] = [
     videos: [
       {
         id: 'gold-1',
-        title: 'Gold Investment Guide: Physical vs Digital Gold',
-        url: 'https://www.youtube.com/watch?v=4g4g4g4g4g4',
-        duration: '11:20',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'How To Invest In Gold?',
+        url: 'https://www.youtube.com/watch?v=fyTCqzWI18A',
+        duration: '13:41',
+        thumbnail: 'https://img.youtube.com/vi/fyTCqzWI18A/maxresdefault.jpg'
       },
       {
         id: 'gold-2',
-        title: 'Sovereign Gold Bonds (SGB) Explained: Complete Guide',
-        url: 'https://www.youtube.com/watch?v=5h5h5h5h5h5',
-        duration: '14:30',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'What is Gold ETF?',
+        url: 'https://www.youtube.com/watch?v=8Acn4zwwGxA',
+        duration: '1:08',
+        thumbnail: 'https://img.youtube.com/vi/8Acn4zwwGxA/maxresdefault.jpg'
       },
       {
         id: 'gold-3',
-        title: 'Gold ETFs vs Gold Mutual Funds: Which is Better?',
-        url: 'https://www.youtube.com/watch?v=6i6i6i6i6i6',
-        duration: '9:45',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'Sovereign Gold Bonds Explained',
+        url: 'https://www.youtube.com/watch?v=5h5h5h5h5h5',
+        duration: '11:05',
+        thumbnail: 'https://img.youtube.com/vi/5h5h5h5h5h5/mqdefault.jpg'
       }
     ]
   },
   {
     id: 'government-bonds',
     title: 'Government Bonds',
-    description: 'Government bonds are debt securities issued by the government to raise funds. They are considered one of the safest investments as they are backed by the government. You can invest through Government Securities (G-Secs), State Development Loans (SDLs), or bond mutual funds. They provide steady, predictable returns with minimal default risk.',
+    description:
+      'Government bonds are debt securities issued by the government to raise funds. They are considered one of the safest investments as they are backed by the government. You can invest through Government Securities (G-Secs), State Development Loans (SDLs), or bond mutual funds. They provide steady, predictable returns with minimal default risk.',
     keyPoints: [
       'Highest safety - backed by the government (virtually no default risk)',
       'Fixed interest payments (coupon) at regular intervals',
@@ -183,24 +188,24 @@ const learningHubContent: Topic[] = [
     videos: [
       {
         id: 'bonds-1',
-        title: 'Government Bonds Explained: Safe Investment Option',
-        url: 'https://www.youtube.com/watch?v=7j7j7j7j7j7',
-        duration: '13:15',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'What are government bonds?',
+        url: 'https://www.youtube.com/watch?v=Saqn77p63cE',
+        duration: '2:37',
+        thumbnail: 'https://img.youtube.com/vi/Saqn77p63cE/maxresdefault.jpg'
       },
       {
         id: 'bonds-2',
-        title: 'How to Invest in Government Bonds: Step by Step',
-        url: 'https://www.youtube.com/watch?v=8k8k8k8k8k8',
-        duration: '16:20',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'What are Bonds and How do they work?',
+        url: 'https://www.youtube.com/watch?v=N_0d35JvuO0',
+        duration: '10:00',
+        thumbnail: 'https://img.youtube.com/vi/N_0d35JvuO0/maxresdefault.jpg'
       },
       {
         id: 'bonds-3',
-        title: 'Government Bonds vs Fixed Deposits: Which is Better?',
-        url: 'https://www.youtube.com/watch?v=9l9l9l9l9l9',
-        duration: '12:40',
-        thumbnail: 'https://img.youtube.com/vi/[VIDEO ID]/maxresdefault.jpg'
+        title: 'Understanding Biggest Risks of Investing in Bonds & Their Types',
+        url: 'https://www.youtube.com/watch?v=3-zoX9GlVMg',
+        duration: '10:20',
+        thumbnail: 'https://img.youtube.com/vi/3-zoX9GlVMg/maxresdefault.jpg'
       }
     ]
   }
